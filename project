@@ -1,6 +1,69 @@
 #include <iostream>
 using namespace std;
+class Game
+{
+public:
+    char board[3][3];
+    int totalMoves;
 
+    Game()
+    {
+        char count = '1';
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                board[i][j] = count++;
+            }
+        }
+        totalMoves = 0;
+    }
+
+    void displayBoard()
+    {
+        cout << "Current Board:\n";
+        cout << "-------------\n";
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                cout << " " << board[i][j] << " ";
+                if (j < 2) cout << "|";
+            }
+            cout << "\n";
+            if (i < 2) cout << "-------------\n";
+        }
+        cout << "-------------\n";
+    }
+
+    bool isMoveValid(int move)
+    {
+        if (move < 1 || move > 9)
+        {
+            return false;
+        }
+        int row = (move - 1) / 3;
+        int col = (move - 1) % 3;
+        if (board[row][col] == 'X' || board[row][col] == 'O')
+        {
+            return false;
+        }
+        return true;
+    }
+
+    void makeMove(int move, char symbol)
+    {
+        int row = (move - 1) / 3;
+        int col = (move - 1) % 3;
+        board[row][col] = symbol;
+        totalMoves++;
+    }
+
+    bool isDraw()
+    {
+        return totalMoves == 9;
+    }
+};
 
 
 class TicTacToe : public Game
